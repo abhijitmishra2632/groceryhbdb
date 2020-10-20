@@ -1,5 +1,6 @@
 package com.cosmos.contactnumbers.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
@@ -8,7 +9,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "usercontacts")
-public class Users {
+public class Users implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5511025153830068925L;
 	@Id
 	private Long mobileNumber;
 	private String userName;
@@ -62,6 +67,12 @@ public class Users {
 	}
 	public void setAddedDate() {
 		this.addedDate = LocalDate.now();
+	}
+	@Override
+	public String toString() {
+		return "Users [mobileNumber=" + mobileNumber + ", userName=" + userName + ", location=" + location
+				+ ", userSource=" + userSource + ", gotWhatsapp=" + gotWhatsapp + ", usefull=" + usefull
+				+ ", addedDate=" + addedDate + "]";
 	}	
 	
 
