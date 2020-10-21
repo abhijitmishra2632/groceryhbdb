@@ -1,6 +1,7 @@
 package com.cosmos.contactnumbers.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,6 +64,14 @@ public class UserController {
 	@GetMapping("/fromexcel")
 	public List<Users> getAllUsersFromFile() throws IOException, ClassNotFoundException {
 		return userService.getAllUsersFromFile();
+	}
+	@GetMapping("/vwhatsapponly/{b}")
+	public List<Users> getAllUsersWhatsappOnly(@PathVariable boolean b) {
+		return userService.getAllUsersWhatsappOnly(b);
+	}
+	@GetMapping("/vbyaddeddate/{addedDate}")
+	public List<Users> getAllUsersByAddedDate(@PathVariable LocalDate addedDate) {
+		return userService.getAllUsersByAddedDate(addedDate);
 	}
 
 	// enable when u want to copy from excel file

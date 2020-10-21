@@ -11,7 +11,10 @@ import com.cosmos.contactnumbers.model.Users;
 
 public interface UserRepository extends JpaRepository<Users, Long>{
 	
-	@Query("SELECT e from Users e where e.addedDate =:date ")       // using @query
+	@Query("SELECT e from Users e where e.addedDate =:date ")       
     List<Users> findByDate(@Param("date") LocalDate date);
+	
+	@Query("SELECT u from Users u where u.gotWhatsapp =:gotWhatsapp ")       
+    List<Users> findWhatsappOnly(@Param("gotWhatsapp") boolean gotWhatsapp);
 
 }

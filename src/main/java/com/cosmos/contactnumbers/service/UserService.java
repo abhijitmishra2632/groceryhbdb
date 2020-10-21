@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,11 +41,11 @@ public class UserService {
 		
 	}
 	public String addUsersFromExcel() {
-		// String str = "C://Users/91900/Desktop/GroceryDb/Expected.xlsx";
-		String str = "C://Users/abhijimi/Desktop/Personal/WorkingCopies/hibernatedb/Expected.xlsx";
+		 String str = "List.xlsx";
+		//String location ="D://AngulCustomers/";
 
 		try {
-			File file = new File(str); // creating a new file instance
+			File file = new File(str);
 			FileInputStream fis = new FileInputStream(file); // obtaining bytes from the file
 			// creating Workbook instance that refers to .xlsx file
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
@@ -81,7 +82,7 @@ public class UserService {
 
 					}
 				}
-				user.setGotWhatsapp(true);
+				user.setGotWhatsapp(false);
 				user.setUsefull(true);
 				userRepository.save(user);
 				i = 0;
@@ -132,6 +133,7 @@ public class UserService {
 
 	public Users saveUser(Users user) {
 		// TODO Auto-generated method stub
+		user.setAddedDate();
 		return userRepository.save(user);
 	}
 
@@ -158,6 +160,21 @@ public class UserService {
 	public List<Users> getAllUsersFromFile() throws ClassNotFoundException, IOException {
 		// TODO Auto-generated method stub
 		return userUtil.fromFile();
+	}
+	public List<Users> getAllUsersWhatsappOnly(boolean b) {
+		// TODO Auto-generated method stub
+		return userRepository.findWhatsappOnly(b);
+	}
+	public List<Users> getAllUsersByAddedDate(LocalDate addedDate) {
+		// TODO Auto-generated method stub
+		System.out.println(addedDate);
+		/*
+		 * DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		 * //convert String to LocalDate LocalDate localDate =
+		 * LocalDate.parse(addedDate, formatter);
+		 */
+		List<Users> users =userRepository.findByDate(addedDate);
+		return users;
 	}
 
 
