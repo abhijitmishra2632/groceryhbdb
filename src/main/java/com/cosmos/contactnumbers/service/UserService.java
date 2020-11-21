@@ -92,6 +92,46 @@ public class UserService {
 		}
 		return "Success";
 	}
+	public String addUsersFromExcel2() {
+
+		 String str = "List.xlsx";
+
+		try {
+			File file = new File(str);
+			FileInputStream fis = new FileInputStream(file); // obtaining bytes from the file
+			// creating Workbook instance that refers to .xlsx file
+			XSSFWorkbook wb = new XSSFWorkbook(fis);
+			XSSFSheet sheet = wb.getSheetAt(0); // creating a Sheet object to retrieve object
+			Iterator<Row> itr = sheet.iterator(); // iterating over excel file
+			Long l = 0L;
+			int i = 0;
+			Users user = new Users();
+			user.setAddedDate();
+			while (itr.hasNext()) {
+				Row row = itr.next();
+				Iterator<Cell> cellIterator = row.cellIterator();
+				while (cellIterator.hasNext()) {
+					Cell cell = cellIterator.next();
+					switch (cell.getCellType()) {
+					case NUMERIC:
+						l = (long) cell.getNumericCellValue();
+						user.setMobileNumber(l);
+						break;
+					}
+				}
+				user.setUserSource("Bipad Vanjan");
+				user.setLocation("Railway Colony");
+				user.setGotWhatsapp(true);
+				user.setUsefull(true);
+				userRepository.save(user);
+				i = 0;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Success";
+	
+	}
 
 	public Optional<Users> getUserByMobileNumber(Long mobileNumber) {
 		// TODO Auto-generated method stub
